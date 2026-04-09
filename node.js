@@ -1,16 +1,4 @@
-/* document.getElementById('login').addEventListener('click',function(){
-    const userAdmin = document.getElementById('user')
-    const contraAdmin = document.getElementById('contra')
-    const contra = 12345
-    const nombre = "alan"
-    const contenedor = document.getElementById('resultado');
-    
-    if ((userAdmin.value == nombre.value) && (contraAdmin.value == contra.value)){
-        contenedor.textContent = `Bienvenido, ${userAdmin}`
-    }else{
-        alert("contraseña o usuario incorrecto")
-    }
-}) */
+
 
 const galletitas = [
     {id:1,
@@ -30,27 +18,39 @@ const galletitas = [
     }]
 
     const inputBusqueda = document.getElementById('busqueda');
+    const contenedor = document.getElementById('contenedor');
+    const botonBuscar = document.getElementById('botonBuscar');
+    const botonReset = document.getElementById('reset');
 
-    inputBusqueda.addEventListener("input", (e) => {
-  
-  const resultados = galletitas.filter(galletas =>
-    galletas.nombre == inputBusqueda.value
-  );
-  
-  console.log(resultados);
+   function mostrarGalletitas(lista) {
+    const html = lista.map(galleta => `
+        <div>
+            <h3>${galleta.nombre}</h3>
+            <p>${galleta.precio}</p>
+        </div>
+    `).join('');
+
+    contenedor.innerHTML = html;
+}
+
+mostrarGalletitas(galletitas);
+
+botonBuscar.addEventListener("click", () => {
+
+    const valor = inputBusqueda.value.toLowerCase();
+
+    const resultados = galletitas.filter(galleta =>
+        galleta.nombre.toLowerCase() === valor
+    );
+
+    mostrarGalletitas(resultados);
+
 });
 
-    const masitas = galletitas.map(galletas => {
-        return(
-            `
-            <div>
-              <h3> ${galletas.nombre}</h3>
-              <p> ${galletas.precio}</p>
-            </div>
-        `
-    )
-    }).join('')
-document.body.innerHTML= masitas
+botonReset.addEventListener("click", () => {
+    mostrarGalletitas(galletitas); 
+    inputBusqueda.value = ""; 
+});
 
     
 
